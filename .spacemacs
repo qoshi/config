@@ -24,6 +24,7 @@ values."
      ;; <m-m f e r> (emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
+     tabbar
      ;; better-defaults
      emacs-lisp
      git
@@ -33,11 +34,7 @@ values."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     syntax-checking
-     go
-     clojure
-     javascript
-     tabbar
+     ;;syntax-checking
      ;; version-control
      )
    ;; list of additional packages that will be installed without being
@@ -254,6 +251,12 @@ this is the place where most of your configurations should be done. unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place you code here."
   ;;replace hot key
+
+  ;;window stuff
+  (global-set-key (kbd"M-c") 'delete-window)
+  (global-set-key (kbd"M--") 'split-window-vertically)
+  (global-set-key (kbd"M-|") 'split-window-horizontally)
+  (global-set-key (kbd"M-B") 'delete-other-windows)
   ;; set alt meta
   (setq alt 'meta)
   ;; when using darwin
@@ -261,11 +264,17 @@ you should place you code here."
   ;; set meta meta
   ;; set controle command
   (when (eq system-type 'darwin)
-    (setq mac-option-modifier 'meta)
-    (setq mac-command-modifier 'control)
-    (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+    (set-keyboard-coding-system nil)
+    ;; (setq mac-option-modifier 'meta)
+    ;; (setq mac-command-modifier 'control)
+    ;; (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
     )
-  ;; for bracket matching
+  ;;mouse
+  (xterm-mouse-mode t)
+  (global-set-key [(mouse-4)] 'scroll-up)
+  (global-set-key [(mouse-5)] 'scroll-down)
+  (setq scroll-step 1)
+
   (global-set-key [(meta left)] 'backward-sexp)
   (global-set-key [(meta right)] 'forward-sexp)
   (global-set-key [(meta j)] 'tabbar-backward)
@@ -297,8 +306,8 @@ you should place you code here."
     (interactive)
     (other-window -1)
     )
-  (global-set-key [(meta \[)] 'pb)
-  (global-set-key [(meta \])] 'nb)
+  (global-set-key (kbd "M-{") 'pb)
+  (global-set-key (kbd "M-}") 'nb)
   ;;rgrep
   (global-set-key (kbd"<f8>") 'rgrep)
 
@@ -336,7 +345,25 @@ you should place you code here."
   (global-set-key kbd("C-c C-f") 'neotree-find)
   (setq projectile-switch-project-action 'neotree-projectile-action)
   (define-key map (kbd "C-c C-p") 'neotree-ffip-project-dir)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (tabbar ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f diminish define-word company-tern dash-functional tern company-statistics company-go go-mode company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
+ '(tabbar-separator (quote (0.5))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+
