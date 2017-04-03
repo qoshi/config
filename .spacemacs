@@ -18,6 +18,8 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     javascript
+     swift
      ;; ----------------------------------------------------------------
      ;; example of useful layers you may want to use right away.
      ;; uncomment some layer names and press <spc f e r> (vim style) or
@@ -27,7 +29,10 @@ values."
      tabbar
      ;; better-defaults
      emacs-lisp
+     ;;swift
      git
+     html
+     colors
      ;; markdown
      ;; org
      ;; (shell :variables
@@ -41,7 +46,7 @@ values."
    ;; wrapped in a layer. if you need some configuration for these
    ;; packages, then consider creating a layer. you can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(company-sourcekit)
    ;; a list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; if non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -232,7 +237,10 @@ values."
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
-   ))
+   )
+  ;;add rainbow mode hooks
+  (add-hook 'prog-mode-hook 'rainbow-mode)
+  )
 
 (defun dotspacemacs/user-init ()
   "initialization function for user code.
@@ -340,12 +348,18 @@ you should place you code here."
   (neotree-toggle)
   (neotree-projectile-action)
   (nb)
-  (global-set-key kbd("C-c C-o") 'neotree-enter-horizontal-split)
-  (global-set-key kbd("C-c C-t") 'neotree-enter-horizontal-split)
-  (global-set-key kbd("C-c C-f") 'neotree-find)
-  (setq projectile-switch-project-action 'neotree-projectile-action)
-  (define-key map (kbd "C-c C-p") 'neotree-ffip-project-dir)
+  ;; (global-set-key kbd("C-c C-o") 'neotree-enter-horizontal-split)
+  ;; (global-set-key kbd("C-c C-t") 'neotree-enter-horizontal-split)
+  ;; (global-set-key kbd("C-c C-f") 'neotree-find)
+  ;; (setq projectile-switch-project-action 'neotree-projectile-action)
+  ;; (define-key map (kbd "C-c C-p") 'neotree-ffip-project-dir)
 
+  ;;swift hooks
+  (add-hook 'swift-mode-hook (lambda() (
+            ;; (require 'company-sourcekit)
+            (company-mode 1)
+            (add-to-list 'company-backends 'company-sourcekit)
+            )))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -357,7 +371,7 @@ you should place you code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (tabbar ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f diminish define-word company-tern dash-functional tern company-statistics company-go go-mode company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
+    (web-mode tagedit slim-mode scss-mode sass-mode rainbow-mode rainbow-identifiers pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data color-identifiers-mode company-sourcekit swift-mode tabbar ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f diminish define-word company-tern dash-functional tern company-statistics company-go go-mode company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
  '(tabbar-separator (quote (0.5))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -365,5 +379,6 @@ you should place you code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
 
 

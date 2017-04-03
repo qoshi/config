@@ -56,7 +56,7 @@ plugins=(git autojump textmate osx)
 
 # User configuration
 
-export PATH=/usr/local/go/bin:/usr/local/Cellar/emacs/24.5/bin:/Users/tozhou/.rvm/gems/ruby-2.2.1/bin:/Users/tozhou/.rvm/gems/ruby-2.2.1@global/bin:/Users/tozhou/.rvm/rubies/ruby-2.2.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/linkedin/bin:/opt/X11/bin:/Users/tozhou/.rvm/bin:/Users/tozhou/work/linkedin/chitu/go/bin:/Users/tozhou/Library/Android/sdk/platform-tools/:/Users/tozhou/Library/Android/sdk/tools/:/usr/local/Cellar/wireshark/2.0.1_1/bin/
+export PATH=/usr/local/go/bin:/usr/local/Cellar/emacs/25.1/bin:/Users/tozhou/.rvm/gems/ruby-2.2.1/bin:/Users/tozhou/.rvm/gems/ruby-2.2.1@global/bin:/Users/tozhou/.rvm/rubies/ruby-2.2.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/linkedin/bin:/opt/X11/bin:/Users/tozhou/.rvm/bin:/Users/tozhou/work/linkedin/chitu/go/bin:/Users/tozhou/Library/Android/sdk/platform-tools/:/Users/tozhou/Library/Android/sdk/tools/:/usr/local/Cellar/wireshark/2.0.1_1/bin/
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
