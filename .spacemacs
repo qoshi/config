@@ -214,7 +214,7 @@ values."
    ;; if non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. if set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers 'relative
    ;; if non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
@@ -384,6 +384,12 @@ you should place you code here."
             (company-mode 1)
             (add-to-list 'company-backends 'company-sourcekit)
             )))
+  (unless (display-graphic-p)
+    (setq linum-relative-format "%3s "))
+
+  ;; Alternatively
+  (unless (display-graphic-p)
+    (setq linum-relative-format (concat linum-relative-format " ")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
