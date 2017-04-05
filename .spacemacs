@@ -18,6 +18,8 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     markdown
+     yaml
      javascript
      swift
      ;; ----------------------------------------------------------------
@@ -39,7 +41,7 @@ values."
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;;syntax-checking
+     syntax-checking
      ;; version-control
      )
    ;; list of additional packages that will be installed without being
@@ -101,13 +103,13 @@ values."
    ;; list of themes, the first of the list is loaded when spacemacs starts.
    ;; press <spc> t n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light
-                         solarized-light
-                         solarized-dark
-                         leuven
-                         monokai
-                         zenburn)
+   ;; dotspacemacs-themes '(spacemacs-dark
+   ;;                       spacemacs-light
+   ;;                       solarized-light
+   ;;                       solarized-dark
+   ;;                       leuven
+   ;;                       monokai
+   ;;                       zenburn)
    ;; if non nil the cursor color matches the state color in gui emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -240,6 +242,11 @@ values."
    )
   ;;add rainbow mode hooks
   (add-hook 'prog-mode-hook 'rainbow-mode)
+  ;;js and json ident
+  (setq-default js2-basic-offset 2)
+  (setq-default js-indent-level 2)
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
   )
 
 (defun dotspacemacs/user-init ()
@@ -249,6 +256,24 @@ executes.
  this function is mostly useful for variables that need to be set
 before packages are loaded. if you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  ;;add web develop hooks
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'web-beautify-js-buffer t t)))
+  (add-hook 'js-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'web-beautify-js-buffer t t)))
+  (add-hook 'json-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'web-beautify-js-buffer t t)))
+  (add-hook 'html-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'web-beautify-html-buffer t t)))
+  (add-hook 'css-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'web-beautify-css-buffer t t)))
+  (global-linum-mode 1)
+  (setq linum-format "%4d \u2502 ")
   )
 
 (defun dotspacemacs/user-config ()
@@ -258,6 +283,8 @@ layers configuration.
 this is the place where most of your configurations should be done. unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place you code here."
+  ;;remove global-hl-line-mode
+  (global-hl-line-mode -1)
   ;;replace hot key
 
   ;;window stuff
@@ -282,7 +309,6 @@ you should place you code here."
   (global-set-key [(mouse-4)] 'scroll-up)
   (global-set-key [(mouse-5)] 'scroll-down)
   (setq scroll-step 1)
-
   (global-set-key [(meta left)] 'backward-sexp)
   (global-set-key [(meta right)] 'forward-sexp)
   (global-set-key [(meta j)] 'tabbar-backward)
@@ -323,8 +349,6 @@ you should place you code here."
   ;;pop-tag-mark when using c-j trigger godef
   (global-set-key (kbd "C-c C-b") 'pop-tag-mark)
 
-  (global-linum-mode)
-  (setq linum-format "%4d ")
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)
     ;;this make godef goimport can load pkg from GOPATH
@@ -346,7 +370,7 @@ you should place you code here."
             (neotree-find file-name))
         (message "Could not find git project root."))))
   (neotree-toggle)
-  (neotree-projectile-action)
+  ;; (neotree-projectile-action)
   (nb)
   ;; (global-set-key kbd("C-c C-o") 'neotree-enter-horizontal-split)
   ;; (global-set-key kbd("C-c C-t") 'neotree-enter-horizontal-split)
@@ -371,7 +395,7 @@ you should place you code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode rainbow-mode rainbow-identifiers pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data color-identifiers-mode company-sourcekit swift-mode tabbar ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f diminish define-word company-tern dash-functional tern company-statistics company-go go-mode company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
+    (mmm-mode markdown-toc markdown-mode gh-md yaml-mode fuzzy sourcekit web-mode tagedit slim-mode scss-mode sass-mode rainbow-mode rainbow-identifiers pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data color-identifiers-mode company-sourcekit swift-mode tabbar ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f diminish define-word company-tern dash-functional tern company-statistics company-go go-mode company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
  '(tabbar-separator (quote (0.5))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
