@@ -42,6 +42,7 @@ values."
      ;;        shell-default-position 'bottom)
      ;; spell-checking
      syntax-checking
+     ivy
      ;; version-control
      )
    ;; list of additional packages that will be installed without being
@@ -82,7 +83,7 @@ values."
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
    ;; unchanged. (default 'vim)
    dotspacemacs-editing-style 'emacs
-   ;; if non nil output loading progress in `*messages*' buffer. (default nil)
+   ;; if non nil output loading progress in `*messages*' buffer. (default nii18n_open_candidate_tooltip_titlel)
    dotspacemacs-verbose-loading nil
    ;; specify the startup banner. default value is `official', it displays
    ;; the official spacemacs logo. an integer value is the index of text
@@ -131,7 +132,7 @@ values."
    ;; (default "c-m-m)
    ;; dotspacemacs-major-mode-emacs-leader-key "c-m-m"
    ;; these variables control whether separate commands are bound in the gui to
-   ;; the key pairs c-i, tab and c-m, ret.
+   ;; the key i18n_open_candidate_tooltip_titlepairs c-i, tab and c-m, ret.
    ;; setting it to a non-nil value, allows for separate commands under <c-i>
    ;; and tab or <c-m> and ret.
    ;; in the terminal, these pairs are generally indistinguishable, so this only
@@ -256,6 +257,15 @@ executes.
  this function is mostly useful for variables that need to be set
 before packages are loaded. if you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (defun iw ()
+    (interactive)
+    (delete-trailing-whitespace)
+    (indent-region (point-min) (point-max) nil)
+    (untabify (point-min) (point-max))
+    )
+  (add-hook 'web-mode-hook
+            (lambda ()
+              (add-hook 'before-save-hook 'iw)))
   ;;add web develop hooks
   (add-hook 'js2-mode-hook
             (lambda ()
@@ -293,16 +303,21 @@ you should place you code here."
   (global-set-key (kbd"M-|") 'split-window-horizontally)
   (global-set-key (kbd"M-B") 'delete-other-windows)
   ;; set alt meta
-  (setq alt 'meta)
+;;  (setq alt 'meta)
   ;; when using darwin
   ;; set command as control
   ;; set meta meta
   ;; set controle command
-  (when (eq system-type 'darwin)
-    (set-keyboard-coding-system nil)
-    ;; (setq mac-option-modifier 'meta)
-    ;; (setq mac-command-modifier 'control)
+  ;;  (when (eq system-type 'darwin)
     ;; (global-set-key [kp-delete] 'delete-char) ;; sets fn-delete to be right-delete
+;;    )
+  (if (display-graphic-p)
+      (when (eq system-type 'darwin)
+        (message "bala bala bal ")
+        (set-keyboard-coding-system nil)
+        (setq mac-option-modifier 'meta)
+        (setq mac-command-modifier 'control)
+        )
     )
   ;;mouse
   (xterm-mouse-mode t)
@@ -328,6 +343,12 @@ you should place you code here."
   (global-set-key (kbd"<f2>") 'replace-string)
   (global-set-key (kbd"<f3>") 'replace-regexp)
   (global-set-key (kbd"<f4>") 'search-forward-regexp)
+  ;; define a function copy one line
+  (defun cp-one-line ()
+    (interactive)
+    (kill-ring-save (line-beginning-position) (line-end-position))
+    )
+  (global-set-key (kbd "C-c C-k") 'cp-one-line)
   ;;buffer loop
   ;; buferjunmping
   ;; next-buffer
@@ -387,6 +408,11 @@ you should place you code here."
   (unless (display-graphic-p)
     (setq linum-relative-format "%3s "))
 
+  ;;chinese font
+  ;; (dolist (charset '(kana han symbol cjk-misc bopomofo))
+  ;;   (set-fontset-font (frame-parameter nil 'font)
+  ;;                     charset (font-spec :family "Microsoft Yahei" :size 16)))
+
   ;; Alternatively
   (unless (display-graphic-p)
     (setq linum-relative-format (concat linum-relative-format " ")))
@@ -401,7 +427,7 @@ you should place you code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (mmm-mode markdown-toc markdown-mode gh-md yaml-mode fuzzy sourcekit web-mode tagedit slim-mode scss-mode sass-mode rainbow-mode rainbow-identifiers pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data color-identifiers-mode company-sourcekit swift-mode tabbar ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f diminish define-word company-tern dash-functional tern company-statistics company-go go-mode company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
+    (pangu-spacing find-by-pinyin-dired chinese-pyim chinese-pyim-basedict ace-pinyin pinyinlib wgrep smex ivy-hydra counsel-projectile counsel swiper ivy mmm-mode markdown-toc markdown-mode gh-md yaml-mode fuzzy sourcekit web-mode tagedit slim-mode scss-mode sass-mode rainbow-mode rainbow-identifiers pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data color-identifiers-mode company-sourcekit swift-mode tabbar ws-butler window-numbering which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox orgit org org-plus-contrib org-bullets open-junk-file neotree move-text magit-gitflow macrostep lorem-ipsum livid-mode skewer-mode simple-httpd linum-relative link-hint json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-guru go-eldoc gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f diminish define-word company-tern dash-functional tern company-statistics company-go go-mode company column-enforce-mode coffee-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed dash aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
  '(tabbar-separator (quote (0.5))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

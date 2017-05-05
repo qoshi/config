@@ -976,7 +976,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>981 745 599 388 0 0 2560 1577 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>1270 890 796 473 0 0 2560 1577 </string>
+	<string>1270 960 918 495 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>0 80 2554 1497 0 0 2560 1577 </string>
 	<key>NeverWarnAboutShortLivedSessions_D3D5EC49-937A-467D-8BC0-CFF56B381EF2</key>
@@ -1169,7 +1169,7 @@
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
-			<false/>
+			<true/>
 			<key>Blur</key>
 			<false/>
 			<key>Blur Radius</key>
@@ -1195,12 +1195,16 @@
 			<real>0.0</real>
 			<key>Cursor Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.73333334922790527</real>
+				<real>0.39522275328636169</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.73333334922790527</real>
+				<real>0.66247832775115967</real>
 				<key>Red Component</key>
-				<real>0.73333334922790527</real>
+				<real>0.22614488005638123</real>
 			</dict>
 			<key>Cursor Guide Color</key>
 			<dict>
@@ -1225,7 +1229,7 @@
 				<real>1</real>
 			</dict>
 			<key>Cursor Type</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Custom Command</key>
 			<string>No</string>
 			<key>Custom Directory</key>
@@ -1349,7 +1353,7 @@
 			<key>Silence Bell</key>
 			<false/>
 			<key>Smart Cursor Color</key>
-			<true/>
+			<false/>
 			<key>Smart Selection Rules</key>
 			<array>
 				<dict>
@@ -2335,7 +2339,7 @@
 	<key>iTerm Version</key>
 	<string>3.0.15</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
-	<integer>0</integer>
+	<integer>6</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
 	<false/>
 	<key>kCommandHistoryHasEverBeenUsed</key>
