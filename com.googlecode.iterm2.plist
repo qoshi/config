@@ -888,7 +888,7 @@
 	<key>EnableRendezvous</key>
 	<false/>
 	<key>FocusFollowsMouse</key>
-	<false/>
+	<true/>
 	<key>FsTabDelay</key>
 	<real>1</real>
 	<key>GlobalKeyMap</key>
@@ -1012,9 +1012,9 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>1270 370 582 223 0 0 1920 1177 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>190 231 796 473 0 0 1280 777 </string>
+	<string>190 252 918 452 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 68 2186 1109 0 0 1920 1177 </string>
+	<string>0 68 1280 709 0 0 1280 777 </string>
 	<key>NeverWarnAboutShortLivedSessions_D3D5EC49-937A-467D-8BC0-CFF56B381EF2</key>
 	<true/>
 	<key>New Bookmarks</key>

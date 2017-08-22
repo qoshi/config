@@ -1,0 +1,15 @@
+autojump
+emacs
+icu4c
+libevent
+node
+nspr
+nss
+openssl
+openssl@1.1
+pcre
+tmux
+tree
+watchman
+wget
+zsh-syntax-highlighting
